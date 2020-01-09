@@ -1,8 +1,18 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import { addItem } from './redux/actions';
 
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onAddItem: (taskName) => dispatch(addItem(taskName))
+    }
+}
 
 class AddItem extends Component {
     constructor(props) {
@@ -21,7 +31,7 @@ class AddItem extends Component {
             alert('Type a task!');
             return;
         }
-        this.props.addItem(this.state.taskName);
+        this.props.onAddItem(this.state.taskName);
         this.setState({
             taskName: ''
         });
@@ -52,4 +62,4 @@ class AddItem extends Component {
     }
 }
 
-export default AddItem;
+export default connect(null, mapDispatchToProps)(AddItem);
