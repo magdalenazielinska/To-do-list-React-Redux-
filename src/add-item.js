@@ -1,65 +1,43 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { addItem } from './redux/actions';
-
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onAddItem: (taskName) => dispatch(addItem(taskName))
-    }
-}
-
-class AddItem extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            taskName: ''
-        }
-    }
-
-    handleSubmit = event => {
+const AddItem = () => {
+    
+    const [taskName, setTaskName] = useState('');
+    const dispatch = useDispatch();
+    
+    function handleSubmit(event) {
         event.preventDefault();
-        if (this.state.taskName === undefined) {
-            return;
-        }
-        if (this.state.taskName.length === 0) {
+        if (taskName.length === 0) {
             alert('Type a task!');
             return;
         }
-        this.props.onAddItem(this.state.taskName);
-        this.setState({
-            taskName: ''
-        });
+        dispatch(addItem(taskName));
+        setTaskName('');
     }
 
-    handleOnChange = event => {
-        this.setState({
-            taskName: event.target.value
-        });
-    };
+    function handleOnChange(event) {
+        setTaskName(event.target.value);
+    }
 
-    render() {
-        return (
-            <form noValidate autoComplete="off" onSubmit={this.handleSubmit}>
-                <Box mt={3} mb={6} display="flex" alignItems="center">
-                    <Box mr={2} width="100%">
-                        <TextField id="standard-full-width" placeholder="Add a new task to the list" fullWidth onChange={this.handleOnChange} value={this.state.taskName}></TextField>
-                        {/* <input placeholder="Add a new task to the list" ref={(element) => { this.input = element }} /> */}
-                    </Box>
-                    <Box ml="auto">
-                        <Button variant="contained" color="primary" type="submit">
-                            Add
-                        </Button>
-                    </Box>
+    return (
+        <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+            <Box mt={3} mb={6} display="flex" alignItems="center">
+                <Box mr={2} width="100%">
+                    <TextField id="standard-full-width" placeholder="Add a new task to the list" fullWidth onChange={handleOnChange} value={taskName}></TextField>
                 </Box>
-            </form>
-        );
-    }
+                <Box ml="auto">
+                    <Button variant="contained" color="primary" type="submit">
+                        Add
+                    </Button>
+                </Box>
+            </Box>
+        </form>
+    );
 }
 
-export default connect(null, mapDispatchToProps)(AddItem);
+export default AddItem;
