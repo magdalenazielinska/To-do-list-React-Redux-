@@ -7,7 +7,7 @@ import {
 } from './actionTypes';
 import { apiCall } from '../api/api';
 
-let nextTodoId = 4;
+let nextTodoId = 0;
 
 export const addItem = taskName => ({
     type: ADD_ITEM,
@@ -27,6 +27,11 @@ export const toggleStatus = id => ({
 
 export const requestTasks = () => (dispatch) => {
     apiCall('http://localhost:9000/tasks')
-        .then(res => dispatch({ type: REQUEST_TASKS_SUCCESS, payload: res}))
+        .then(res => {
+            nextTodoId = res.length;
+            res.map(item => {
+                return dispatch({ type: REQUEST_TASKS_SUCCESS, payload: item})
+            });
+        })
         .catch(err => dispatch({ type: REQUEST_TASKS_FAILED, payload: err}))
 }

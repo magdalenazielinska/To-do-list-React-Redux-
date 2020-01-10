@@ -26,25 +26,14 @@ export const todoList = ( state = initialState, action ) => {
             return state.map(item =>
                 item.id === action.id ? { ...item, isDone: !item.isDone } : item
             );
-        default:
-            return state
-    }
-}
-
-export const requestTasks = ( state = initialState, action ) => {
-    switch (action.type) {
         case REQUEST_TASKS_SUCCESS:
             return [
                 ...state,
-                {
-                    itemsList: action.payload
-                }
+                action.payload
             ]
         case REQUEST_TASKS_FAILED:
-            return [
-                ...state,
-                { error: action.payload }
-            ]
+            console.log(action.payload);
+            return state
         default:
             return state
     }

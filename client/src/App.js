@@ -8,13 +8,12 @@ import Typography from '@material-ui/core/Typography';
 
 const App = () => {
 
-  const itemsList = useSelector(state => state.todoList);
-  const apiItemsList = useSelector(state => state.requestTasks);
+  const itemsList = useSelector(state => state);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(requestTasks());
-  });
+  }, []);
 
   return (
     <Fragment>
@@ -23,7 +22,7 @@ const App = () => {
           <Typography variant="h4">To-Do List</Typography>
         </Toolbar>
       </AppBar>
-      <ListContainer items={itemsList} itemsApi={apiItemsList} />
+      <ListContainer items={itemsList}/>
     </Fragment>
   );
 }
