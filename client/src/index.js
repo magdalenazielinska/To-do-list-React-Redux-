@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import thunk from 'redux-thunk';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import { todoList } from './redux/reducers';
+import { combineReducers, createStore, applyMiddleware } from 'redux';
+import { todoList, requestTasks } from './redux/reducers';
 
-
-const store = createStore(todoList);
+const rootReducers = combineReducers({ todoList, requestTasks });
+const store = createStore(rootReducers, applyMiddleware(thunk));
 
 ReactDOM.render(
     <Provider store={store}>

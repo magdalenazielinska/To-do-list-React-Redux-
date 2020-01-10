@@ -1,4 +1,10 @@
-import { ADD_ITEM, REMOVE_ITEM, TOGGLE_STATUS } from './actionTypes';
+import { 
+    ADD_ITEM, 
+    REMOVE_ITEM, 
+    TOGGLE_STATUS,
+    REQUEST_TASKS_SUCCESS, 
+    REQUEST_TASKS_FAILED 
+} from './actionTypes';
 
 const initialState = [];
 
@@ -11,7 +17,7 @@ export const todoList = ( state = initialState, action ) => {
                     id: action.id,
                     taskName: action.taskName,
                     isDone: false
-                }
+                }            
             ]
         case REMOVE_ITEM:
             const numId = +(action.id);
@@ -20,6 +26,25 @@ export const todoList = ( state = initialState, action ) => {
             return state.map(item =>
                 item.id === action.id ? { ...item, isDone: !item.isDone } : item
             );
+        default:
+            return state
+    }
+}
+
+export const requestTasks = ( state = initialState, action ) => {
+    switch (action.type) {
+        case REQUEST_TASKS_SUCCESS:
+            return [
+                ...state,
+                {
+                    itemsList: action.payload
+                }
+            ]
+        case REQUEST_TASKS_FAILED:
+            return [
+                ...state,
+                { error: action.payload }
+            ]
         default:
             return state
     }
