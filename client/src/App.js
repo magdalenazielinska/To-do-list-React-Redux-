@@ -12,9 +12,9 @@ const App = () => {
   const apiItemsList = useSelector(state => state.requestTasks);
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(requestTasks());
-  // });
+  useEffect(() => {
+    dispatch(requestTasks());
+  });
 
   return (
     <Fragment>

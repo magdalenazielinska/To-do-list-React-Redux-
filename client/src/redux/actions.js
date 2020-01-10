@@ -7,7 +7,7 @@ import {
 } from './actionTypes';
 import { apiCall } from '../api/api';
 
-let nextTodoId = 3;
+let nextTodoId = 4;
 
 export const addItem = taskName => ({
     type: ADD_ITEM,
