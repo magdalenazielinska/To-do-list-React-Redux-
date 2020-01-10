@@ -1,3 +1,3 @@
 export const apiCall = (link) => {
-  return fetch(link, {mode: "no-cors"}).then(res => res.json())
+  return fetch(link).then(res => res.json())
 }
